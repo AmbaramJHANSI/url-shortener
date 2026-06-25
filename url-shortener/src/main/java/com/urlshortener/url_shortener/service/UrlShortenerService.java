@@ -1,5 +1,7 @@
-package com.urlshortener.url_shortener;
+package com.urlshortener.url_shortener.service;
 
+import com.urlshortener.url_shortener.entity.ShortUrl;
+import com.urlshortener.url_shortener.repository.ShortUrlRepository;
 import com.urlshortener.url_shortener.util.ShortCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

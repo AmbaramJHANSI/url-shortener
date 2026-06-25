@@ -1,9 +1,9 @@
 package com.urlshortener.url_shortener.controller;
 
-import com.urlshortener.url_shortener.ShortUrl;
-import com.urlshortener.url_shortener.UrlShortenerService;
 import com.urlshortener.url_shortener.dto.ShortUrlRequest;
 import com.urlshortener.url_shortener.dto.ShortenUrlResponse;
+import com.urlshortener.url_shortener.entity.ShortUrl;
+import com.urlshortener.url_shortener.service.UrlShortenerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

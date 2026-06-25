@@ -1,4 +1,4 @@
-package com.urlshortener.url_shortener;
+package com.urlshortener.url_shortener.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
