@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortened - URL Shortener</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .success-icon {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 3em;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+
+        .result-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result-item {
+            margin-bottom: 20px;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            color: #888;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .result-value-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .result-value {
+            flex: 1;
+            color: #333;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .short-code-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .copy-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            margin-left: 10px;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+
+        .copy-button:hover {
+            background: #764ba2;
+        }
+
+        .datetime {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        .info-box p {
+            color: #1565c0;
+            margin: 0;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        button, a.button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .secondary-button {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .secondary-button:hover {
+            background: #e8e8e8;
+            transform: translateY(-2px);
+        }
+
+        .visit-button {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .visit-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .table-info {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table-info tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table-info tr:last-child {
+            border-bottom: none;
+        }
+
+        .table-info td {
+            padding: 12px 0;
+        }
+
+        .table-info td:first-child {
+            font-weight: 600;
+            color: #666;
+            width: 30%;
+        }
+
+        .table-info td:last-child {
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .result-value-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .copy-button {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button, a.button {
+                flex: none;
+                width: 100%;
+            }
+        }
+
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 15px;
+            color: #155724;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✅</div>
+        <h1>URL Shortened Successfully!</h1>
+        <p class="subtitle">Your short URL is ready to share</p>
+
+        <div class="success-message">
+            Short URL created successfully! You can now use the link below.
+        </div>
+
+        <!-- Main Result Display -->
+        <div class="result-section">
+            <!-- Short Code -->
+            <div class="result-item">
+                <div class="result-label">Short Code</div>
+                <div class="result-value-container">
+                    <span class="result-value short-code-value" th:text="${response.shortCode}"></span>
+                    <button class="copy-button" onclick="copyToClipboard(document.querySelector('.short-code-value').textContent)">Copy</button>
+                </div>
+            </div>
+
+            <!-- Short URL -->
+            <div class="result-item">
+                <div class="result-label">Your Short URL</div>
+                <div class="result-value-container">
+                    <span class="result-value" th:text="${response.shortUrl}"></span>
+                    <button class="copy-button" onclick="copyToClipboard(document.querySelector('.result-value').textContent)">Copy</button>
+                </div>
+            </div>
+
+            <!-- Original URL -->
+            <div class="result-item">
+                <div class="result-label">Original URL</div>
+                <div class="result-value-container">
+                    <span class="result-value" th:text="${response.originalUrl}" title="Click to visit">
+                    </span>
+                </div>
+            </div>
+
+            <!-- Creation Date -->
+            <div class="result-item">
+                <div class="result-label">Created At</div>
+                <div class="result-value">
+                    <span th:text="${#temporals.format(response.createdAt, 'yyyy-MM-dd HH:mm:ss')}" class="datetime"></span>
+                </div>
+            </div>
+
+            <!-- Expiration Date (if applicable) -->
+            <div class="result-item" th:if="${response.expiresAt != null}">
+                <div class="result-label">Expires At</div>
+                <div class="result-value">
+                    <span th:text="${#temporals.format(response.expiresAt, 'yyyy-MM-dd HH:mm:ss')}" class="datetime"></span>
+                </div>
+            </div>
+
+            <!-- No Expiration Notice -->
+            <div class="result-item" th:if="${response.expiresAt == null}">
+                <div class="result-label">Expiration</div>
+                <div class="result-value">
+                    <span class="datetime">No expiration set - URL is permanent</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Box -->
+        <div class="info-box">
+            <p>💡 <strong>Tip:</strong> You can share the short URL or visit it to redirect to the original URL. Anyone who visits the short link will be automatically redirected to the original URL.</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <a href="#" class="button primary-button" th:href="${response.shortUrl}" target="_blank">
+                🔗 Visit Short URL
+            </a>
+            <form th:action="@{/}" method="GET" style="flex: 1;">
+                <button type="submit" class="secondary-button" style="width: 100%;">
+                    ➕ Shorten Another URL
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Show a temporary notification
+                const notification = document.createElement('div');
+                notification.textContent = '✓ Copied to clipboard!';
+                notification.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: #4caf50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease-in-out;
+                `;
+                document.body.appendChild(notification);
+
+                // Remove notification after 2 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease-in-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, 2000);
+            }).catch(function(err) {
+                alert('Failed to copy to clipboard');
+            });
+        }
+
+        // Animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
