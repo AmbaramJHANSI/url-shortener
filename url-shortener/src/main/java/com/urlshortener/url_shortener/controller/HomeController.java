@@ -80,12 +80,8 @@ public class HomeController {
      */
     @GetMapping("/{shortCode}")
     public RedirectView redirectToOriginalUrl(@PathVariable String shortCode) {
-        Optional<ShortUrl> shortUrl = urlShortenerService.getOriginalUrl(shortCode);
+        ShortUrl shortUrl = urlShortenerService.getOriginalUrl(shortCode);
 
-        if (shortUrl.isPresent()) {
-            return new RedirectView(shortUrl.get().getOriginalUrl());
-        } else {
-            return new RedirectView("/");
-        }
+        return new RedirectView(shortUrl.getOriginalUrl());
     }
 }

@@ -1,6 +1,7 @@
 package com.urlshortener.url_shortener.service;
 
 import com.urlshortener.url_shortener.entity.ShortUrl;
+import com.urlshortener.url_shortener.exception.ResourceNotFoundException;
 import com.urlshortener.url_shortener.repository.ShortUrlRepository;
 import com.urlshortener.url_shortener.util.ShortCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,10 @@ public class UrlShortenerService {
      * @return an Optional containing the ShortUrl if found, or empty if not found
      */
     @Transactional(readOnly = true)
-    public Optional<ShortUrl> getOriginalUrl(String shortCode) {
-        return shortUrlRepository.findByShortCode(shortCode);
+    public ShortUrl getOriginalUrl(String shortCode) {
+
+        return shortUrlRepository.findByShortCode(shortCode)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Short URL not found."));
     }
 }
