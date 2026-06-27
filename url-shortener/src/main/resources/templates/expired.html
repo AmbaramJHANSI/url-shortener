@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Link Unavailable</title>
+    <style>
+        body{
+            font-family:Arial,sans-serif;
+            background:#f5f5f5;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+        .card{
+            background:white;
+            padding:40px;
+            border-radius:10px;
+            text-align:center;
+            width:420px;
+            box-shadow:0 5px 20px rgba(0,0,0,.15);
+        }
+        h1{
+            color:#d32f2f;
+        }
+        p{
+            margin:20px 0;
+            color:#555;
+        }
+        a{
+            text-decoration:none;
+            background:#667eea;
+            color:white;
+            padding:12px 20px;
+            border-radius:6px;
+        }
+        a:hover{
+            background:#4b63d1;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>⚠ Link Unavailable</h1>
+    <p th:text="${message}">
+        This short URL has expired.
+    </p>
+    <a href="/">Create New Short URL</a>
+</div>
+</body>
+</html>

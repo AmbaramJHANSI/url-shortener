@@ -236,6 +236,31 @@
                     required>
                 <div class="error-message" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
             </div>
+            <div class="form-group">
+                <label for="customAlias">Custom Alias (Optional)</label>
+                <input
+                    type="text"
+                    id="customAlias"
+                    name="customAlias"
+                    th:field="*{customAlias}"
+                    placeholder="Example: github">
+                <small style="color: gray;">
+                    Leave empty to generate a random short code.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="expiryHours">Expiry (Hours)</label>
+                <input
+                    type="number"
+                    id="expiryHours"
+                    name="expiryHours"
+                    th:field="*{expiryHours}"
+                    min="1"
+                    placeholder="Example: 24">
+                <small style="color:gray;">
+                    Leave empty for a permanent URL.
+                </small>
+            </div>
             <button type="submit">Shorten URL</button>
         </form>
 

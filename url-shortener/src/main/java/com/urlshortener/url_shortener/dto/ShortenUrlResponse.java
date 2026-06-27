@@ -14,10 +14,17 @@ public class ShortenUrlResponse {
     private String shortCode;
     private String shortUrl;
     private String originalUrl;
+    private Long clickCount;
+
+    private LocalDateTime lastAccessed;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime expiresAt;
+    
+    // NEW
+    private String qrCode;
 }
+ 

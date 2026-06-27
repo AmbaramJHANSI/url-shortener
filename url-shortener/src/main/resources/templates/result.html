@@ -305,6 +305,31 @@
                 </div>
             </div>
 
+            <!-- Click Count -->
+            <div class="result-item">
+                <div class="result-label">Click Count</div>
+                <div class="result-value">
+                    <span th:text="${response.clickCount}"></span>
+                </div>
+            </div>
+
+            <!-- Last Accessed -->
+            <div class="result-item">
+                <div class="result-label">
+                    Last Accessed
+                </div>
+                <div class="result-value">
+                    <span
+                    th:if="${response.lastAccessed!=null}"
+                    th:text="${#temporals.format(response.lastAccessed,'yyyy-MM-dd HH:mm:ss')}">
+                    </span>
+                    <span
+                    th:if="${response.lastAccessed==null}">
+                        Never Accessed
+                    </span>
+                </div>
+            </div>
+
             <!-- Expiration Date (if applicable) -->
             <div class="result-item" th:if="${response.expiresAt != null}">
                 <div class="result-label">Expires At</div>
@@ -318,6 +343,24 @@
                 <div class="result-label">Expiration</div>
                 <div class="result-value">
                     <span class="datetime">No expiration set - URL is permanent</span>
+                </div>
+            </div>
+            
+            <!-- QR Code -->
+            <div class="result-item">
+                <div class="result-label">QR Code</div>
+                <div style="text-align:center; margin-top:15px;">
+                    <img
+                            th:src="'data:image/png;base64,' + ${response.qrCode}"
+                            alt="QR Code"
+                            style="width:220px;                       height:220px;                       border:1px solid #ddd;                       padding:10px;                       background:white;                       border-radius:10px;">
+                    <div style="margin-top:12px;">
+                        <a id="downloadQr" download="qrcode.png" th:href="'data:image/png;base64,' + ${response.qrCode}">
+                            <button class="primary-button">
+                                Download QR Code
+                            </button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -30,4 +30,13 @@ public class ShortUrl {
 
     @Column(name = "expires_at")
     private LocalDateTime expiresAt;
+
+    @Column(name = "click_count", nullable = false)
+    private Long clickCount = 0L;
+
+    @Column(name = "last_accessed")
+    private LocalDateTime lastAccessed;
+
+    
+
 }
